@@ -6,18 +6,25 @@ Application is distributed as a Java Jar archive.
 
 ### Get sources
 
-Checkout [AthenaUI repository](https://github.com/OHDSI/AthenaUI.git): 
+Checkout [AthenaUI repository](https://github.com/MarieMartin33/AthenaUI.git): 
 ```
-git clone https://github.com/OHDSI/AthenaUI.git 
+git clone https://github.com/MarieMartin33/AthenaUI.git
 ```
 
 ### Install npm packages
 
 After getting the sources please execute following commands: 
 
+in package.json
+replace "\^([0-9]+\.[0-9]+\.[0-9]+)" => "*"
+del package-lock.json
+del node_modules
+
 ```
 cd AthenaUI
-npm install
+npm update --save --legacy-peer-deps
+npm install --legacy-peer-deps
+npm install react-bootstrap bootstrap --legacy-peer-deps
 ```
 
 ### Build

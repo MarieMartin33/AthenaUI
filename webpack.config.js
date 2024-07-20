@@ -41,12 +41,12 @@ module.exports = function(env) {
         {
           test: /\.tsx?$/,
           exclude: /(node_modules|ArachneUIComponents|@types)/gi,
-          loaders: ['ts-loader']
+          loader: 'ts-loader'
         },
         {
           test: /\.jsx?$/,
           exclude: /(node_modules|ArachneUIComponents)/,
-          loaders: ['babel-loader']
+          loader: 'babel-loader'
         },
         {
           test: /\.scss$/,
@@ -60,11 +60,11 @@ module.exports = function(env) {
             {
               loader: "sass-loader",
               options: {
-                includePaths: [
+                sassOptions: {includePaths: [
                   sourcePath,
                   path.join(__dirname, 'node_modules')
-                ],
-                data: "$isAppNode: false;"
+                ]},
+                additionalData: "$isAppNode: false;"
               },
             },
           ]
@@ -92,7 +92,7 @@ module.exports = function(env) {
         template: 'index.html',
         favicon: 'favicon.ico',
       }),
-      new CopyWebpackPlugin([
+      new CopyWebpackPlugin({patterns: [
         {
           from: path.join(__dirname, 'node_modules/arachne-ui-components/lib/resources/fonts'),
           to: path.join(outPath, 'fonts')
@@ -105,16 +105,15 @@ module.exports = function(env) {
           from: path.join(__dirname, 'resources/icons'),
           to: path.join(outPath, 'icons')
         },
-      ]),
+      ]}),
       new webpack.DefinePlugin({
         __DEV__: mode === ENV_TYPE.DEV,
       }),
     ],
-    node: {
-      // workaround for webpack-dev-server issue 
-      // https://github.com/webpack/webpack-dev-server/issues/60#issuecomment-103411179
-      fs: 'empty',
-      net: 'empty'
+    resolve: {
+      fallback: {
+        fs: false
+      }
     }
   };
 }
